@@ -1,29 +1,35 @@
+package tests;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
+    static final String SITE = "https://www.emag.ro/";
     final static Logger logger = Logger.getLogger(BaseTest.class);
     private static final int WAIT_SEC = 10;
     public static WebDriver driver;
 
-    public static WebDriver setUpDriverFor(String site) {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        driver = new ChromeDriver();
-        driver.get(site);
-        driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(WAIT_SEC, TimeUnit.SECONDS);
+    @BeforeTest
+    public static void setUpDriverFor() {
+        BasicConfigurator.configure();
 
-        return driver;
+        logger.info("Setting up Driver configuration...");
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.get(SITE);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(WAIT_SEC, TimeUnit.SECONDS);
     }
 
-    @AfterMethod
+    @AfterTest(alwaysRun = true)
     public static void tearDown() {
         driver.quit();
         logger.info("Test completed.");

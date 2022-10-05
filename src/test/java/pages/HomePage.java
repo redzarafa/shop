@@ -1,4 +1,4 @@
-package emag;
+package pages;
 
 import org.openqa.selenium.WebDriver;
 
