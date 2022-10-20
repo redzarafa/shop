@@ -25,12 +25,14 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get(SITE);
+        logger.info("maximizing browser window...");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(WAIT_SEC, TimeUnit.SECONDS);
     }
 
     @AfterTest(alwaysRun = true)
     public static void tearDown() {
+        logger.info("quitting the browser...");
         driver.quit();
         logger.info("Test completed.");
     }
