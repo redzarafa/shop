@@ -31,20 +31,6 @@ public class BasePage {
         webElement.sendKeys(key);
     }
 
-    public void send(By by, String text, Keys key) throws InterruptedException {
-        waiter.waitTillDisplayed(by);
-        WebElement webElement = driver.findElement(by);
-        webElement.sendKeys(text);
-        waiter.nap();
-        webElement.sendKeys(key);
-        waiter.nap();
-    }
-
-    public String getElementText(By by) {
-        waiter.waitTillDisplayed(by);
-        WebElement webElement = driver.findElement(by);
-        return webElement.getText();
-    }
 
     public ResultsPage getSearchResults(String text) {
         WebElement searchBox = driver.findElement(By.id("searchboxTrigger"));
@@ -55,11 +41,4 @@ public class BasePage {
         return new ResultsPage(driver);
     }
 
-//
-//    public CartPage goToCartPage(){
-//        final String CART_XPATH = "//*[@id=\"my_cart\"]/i";
-//        WebElement cart = driver.findElement(By.xpath(CART_XPATH));
-//        cart.click();
-//        return new CartPage(driver);
-//    }
 }
